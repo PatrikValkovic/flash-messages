@@ -32,9 +32,9 @@ class FlashMiddleware
     public function Handle($request, Closure $next)
     {
         $content = $this->session->get($this->SESSION_KEY_NAME);
-        $messages = $this->container->deserialize($content);
+        $container = $this->container->deserialize($content);
 
-        View::share('flashes',$messages);
+        View::share('flashes',$container->getMessages());
 
         $response = $next($request);
 
