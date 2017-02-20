@@ -3,31 +3,42 @@
 namespace Valkovic\Flash;
 
 use Closure;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\View;
 
 class FlashMiddleware
 {
-    private $COOKIE_NAME = 'valkovic.flash-messages';
+    /**
+     * @var string Name of
+     */
+    private $SESSION_KEY_NAME = 'valkovic.flash-messages';
+
+    /**
+     * @var MessageContainer Container with messages
+     */
     private $container;
 
-    public function __construct(MessageContainer $container)
+    /**
+     * @var Store
+     */
+    private $session;
+
+    public function __construct(MessageContainer $container, Store $session)
     {
         $this->container = $container;
+        $this->session = $session;
     }
 
     public function Handle($request, Closure $next)
     {
-        $content = $request->cookie($this->COOKIE_NAME);
-        $messages = null;
-        if (is_null($content))
-            $messages = $this->container->deserialize('[]');
-        else
-            $messages = $this->container->deserialize($content);
+        $content = $this->session->get($this->SESSION_KEY_NAME);
+        $messages = $this->container->deserialize($content);
 
+        View::share('flashes',$messages);
 
-        //TODO show old data to views
         $response = $next($request);
 
-        //TODO flash new messages
+        $this->session->flash($this->SESSION_KEY_NAME,$this->container->serialize());
 
         return $response;
     }

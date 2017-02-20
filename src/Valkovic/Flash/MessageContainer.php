@@ -24,6 +24,9 @@ class MessageContainer
     public function deserialize($text)
     {
         $container = new MessageContainer();
+        if(is_null($text))
+            return $container;
+
         $container->messages = json_decode($text);
         foreach($container->messages as &$message)
             $message = (array)$message;
