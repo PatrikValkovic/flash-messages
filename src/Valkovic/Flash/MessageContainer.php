@@ -28,7 +28,7 @@ class MessageContainer
      * @param {string} $text Serialized text with messages
      * @return MessageContainer
      */
-    public static function deserialize($text)
+    public function deserialize($text)
     {
         $container = new MessageContainer();
         $container->messages = json_decode($text);
