@@ -13,7 +13,7 @@ class FlashMessage
     public $text;
 
     /**
-     * @var 'none'|'primary'|'info'|'success'|'warning'|'error' Type of message
+     * @var string('none'|'primary'|'info'|'success'|'warning'|'error') Type of message
      */
     public $type;
 
