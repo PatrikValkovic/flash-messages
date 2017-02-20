@@ -1,0 +1,8 @@
+{
+    "name": "valkovic/flash",
+    "description": "Flash messages for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {}
+}
