@@ -1,6 +1,6 @@
 <?php
-namespace Valkovic\Flash;
 
+namespace Valkovic\Flash;
 
 class Flash
 {

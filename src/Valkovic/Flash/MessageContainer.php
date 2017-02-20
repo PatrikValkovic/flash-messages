@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kowalsky
- * Date: 2/20/17
- * Time: 2:49 PM
- */
 
 namespace Valkovic\Flash;
-
 
 class MessageContainer
 {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kowalsky
- * Date: 2/20/17
- * Time: 3:14 PM
- */
 
 namespace Valkovic\Flash;
 
