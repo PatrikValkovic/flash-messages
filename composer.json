@@ -1,8 +1,13 @@
 {
-    "name": "valkovic/flash",
-    "description": "Flash messages for Laravel",
-    "type": "library",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "valkovic/flash",
+  "description": "Flash messages for Laravel",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+    "illuminate/session": "^5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.0"
+  }
 }
