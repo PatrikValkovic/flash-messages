@@ -10,11 +10,11 @@ class MessageContainer
     private $messages = [];
 
     /**
-     *
+     * @return string Serialized messages
      */
     public function serialize()
     {
-        json_encode($this->messages);
+        return json_encode($this->messages);
     }
 
     /**
@@ -33,8 +33,19 @@ class MessageContainer
         return $container;
     }
 
+    /**
+     * @param FlashMessage $message Message to add into container
+     */
     public function addMessage(FlashMessage $message)
     {
         array_push($this->messages,$message);
+    }
+
+    /**
+     * @return FlashMessage[] Array of messages
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
