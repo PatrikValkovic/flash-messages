@@ -20,5 +20,5 @@ class FlashMessage
     /**
      * @var array Additional properties of message (id, class, etc)
      */
-    public $properties;
+    public $properties = [];
 }
