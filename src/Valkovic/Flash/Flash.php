@@ -24,12 +24,17 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function message($text, $type = 'none', $properties = null)
+    public function message($text, $type = null, $properties = [])
     {
         $message = new FlashMessage();
         $message->text = $text;
-        $message->type = $type;
-        $message->properties = is_null($properties) ? [] : $properties;
+
+        if (!is_null($type)) {
+            $properties['class'] = array_key_exists('class', $properties) ? $properties['class'] : '';
+            $properties['class'] = trim($properties['class'] . " $type");
+        }
+
+        $message->properties = $properties;
         $this->container->addMessage($message);
         return $this;
     }
@@ -39,7 +44,7 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function none($text, $properties = null)
+    public function none($text, $properties = [])
     {
         return $this->message($text, 'none', $properties);
     }
@@ -49,7 +54,7 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function primary($text, $properties = null)
+    public function primary($text, $properties = [])
     {
         return $this->message($text, 'primary', $properties);
 
@@ -60,7 +65,7 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function success($text, $properties = null)
+    public function success($text, $properties = [])
     {
         return $this->message($text, 'success', $properties);
 
@@ -71,7 +76,7 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function warning($text, $properties = null)
+    public function warning($text, $properties = [])
     {
         return $this->message($text, 'warning', $properties);
 
@@ -82,7 +87,7 @@ class Flash
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function error($text, $properties = null)
+    public function error($text, $properties = [])
     {
         return $this->message($text, 'error', $properties);
 
