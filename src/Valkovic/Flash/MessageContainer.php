@@ -27,9 +27,16 @@ class MessageContainer
         if (is_null($text))
             return $container;
 
-        $container->messages = json_decode($text);
-        foreach ($container->messages as &$message)
-            $message->properties = (array)$message->properties;
+        $parsed = json_decode($text);
+        foreach($parsed as $item)
+        {
+            $message = new FlashMessage();
+            $message->message = $item->message;
+            $message->properties = (array)$item->properties;
+            $container->addMessage($message);
+        }
+
+
         return $container;
     }
 
