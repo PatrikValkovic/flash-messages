@@ -29,7 +29,7 @@ class MessageContainer
 
         $container->messages = json_decode($text);
         foreach($container->messages as &$message)
-            $message = (array)$message;
+            $message->properties = (array)$message->properties;
         return $container;
     }
 
