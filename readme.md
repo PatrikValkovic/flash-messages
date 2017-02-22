@@ -1,5 +1,8 @@
 # Flash Messages for Your Laravel App
 
+This package is inspired by [laracast/flash](https://packagist.org/packages/laracasts/flash) package.  
+Unlike that package, this package allows to use multiple flash messages during one request and set additional properties to HTML tag.
+
 ## Installation
 
 First, pull in the package through Composer.
@@ -44,37 +47,64 @@ public function store()
 
 You may also do:
 
+- `flash('Message', 'none')`
 - `flash('Message', 'info')`
+- `flash('Message', 'primary')`
 - `flash('Message', 'success')`
-- `flash('Message', 'danger')`
 - `flash('Message', 'warning')`
+- `flash('Message', 'error')`
 - `flash()->overlay('Modal Message', 'Modal Title')`
 - `flash('Message')->important()`
 
-Behind the scenes, this will set a few keys in the session:
+Behind the scenes, this will set `valkovic.flash-messages` key in the session:
 
-- 'flash_notification.message' - The message you're flashing
-- 'flash_notification.level' - A string that represents the type of notification (good for applying HTML class names)
-
-With this message flashed to the session, you may now display it in your view(s). Maybe something like:
+During next request, `Valkovic\Flash\FlashMiddleware` will load messages from session and share them to all views as `Flashes` variable.  
+Then, in your view, you can iterate over them.
 
 ```html
-@if (session()->has('flash_notification.message'))
-    <div class="alert alert-{{ session('flash_notification.level') }}">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
-        {!! session('flash_notification.message') !!}
-    </div>
-@endif
+<div class="notifications">
+    @foreach($flashes as $flash)
+        <div>
+            {{$flash->message}}
+        </div>
+    @endforeach
+</div>
 ```
 
-> Note that this package is optimized for use with Twitter Bootstrap.
+If you set type of message, that type is attach to message as CSS class. If you want to render also that class, you must call `$flash->renderProperties()`.
+Because this text contains HTML specific tag, you must not escape output from that method.
 
-Because flash messages and overlays are so common, if you want, you may use (or modify) the views that are included with this package. Simply append to your layout view:
+```
+<div class="notifications">
+    @foreach($flashes as $flash)
+        <div {!! $flash->renderProperties() !!}>
+            {{$flash->message}}
+        </div>
+    @endforeach
+</div>
+```
+
+> Note that type of messages reflect classes in Twitter Bootstrap.
+
+If you with, you can add more classes or even properties to tag. For example, this code
+
+```php
+flash('Some message','primary',['class'=>'myClass','id'=>'flashMessage']);
+```
+
+with previous blade example will produce following code.
 
 ```html
-@include('flash::message')
+<div class="notifications">
+        <div class="primary myClass" id="flashMessage">
+            Some message
+        </div>
+</div>
 ```
+
+## Another usage
+
+
 
 ## Example
 
