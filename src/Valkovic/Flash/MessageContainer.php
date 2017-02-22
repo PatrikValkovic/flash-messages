@@ -24,11 +24,11 @@ class MessageContainer
     public function deserialize($text)
     {
         $container = new MessageContainer();
-        if(is_null($text))
+        if (is_null($text))
             return $container;
 
         $container->messages = json_decode($text);
-        foreach($container->messages as &$message)
+        foreach ($container->messages as &$message)
             $message->properties = (array)$message->properties;
         return $container;
     }
@@ -38,7 +38,7 @@ class MessageContainer
      */
     public function addMessage(FlashMessage $message)
     {
-        array_push($this->messages,$message);
+        array_push($this->messages, $message);
     }
 
     /**
