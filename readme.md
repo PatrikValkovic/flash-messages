@@ -104,80 +104,55 @@ with previous blade example will produce following code.
 
 ## Another usage
 
+This package provides `Flash` model, `Flash` facade and also `flash` helper function.
+You are free yo choose, which approach more suits for you. If you want to use `Flash` facade, you will first need to register alias for it, as is noted in Install section.
 
+These commands will have same results.
+```php
 
-## Example
+flash('Message','success');
+Flash()->success('Message');
+flash()->success('Message'); //Note that flash() without parameters return Flash Model
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-</head>
-<body>
+// OR INSIDE CLASS
+private $flash;
+public function __construct(\Valkovic\Flash\Flash $flash) {
+    $this->flash = $flash;
+}
+public function send(User $user) {
+    //store User
+    $this->flash->success('Message');
+}
+```
 
-<div class="container">
-    @include('flash::message')
+If you don't want to use Bootstrap specific classes, you are free to use array of properties as second parameter to `message` method or `flash` helper.
 
-    <p>Welcome to my website...</p>
+```php
+flash('Message',['class'=>'myClass','id'=>'flashMessage']);
+Flash()->message('Message',['class'=>'myClass','id'=>'flashMessage']);
+
+//with template before will produce
+<div class="notifications">
+        <div class="myClass" id="flashMessage">
+            Some message
+        </div>
 </div>
-
-<!-- This is only necessary if you do Flash::overlay('...') -->
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-<script>
-    $('#flash-overlay-modal').modal();
-</script>
-
-</body>
-</html>
 ```
 
-If you need to modify the flash message partials, you can run:
-
-```bash
-php artisan vendor:publish
-```
-
-The two package views will now be located in the `app/views/packages/laracasts/flash/` directory.
-
-```php
-flash('Welcome Aboard!');
-
-return home();
-```
-
-![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/message.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/message.png)
-
-```php
-flash('Sorry! Please try again.', 'danger');
-
-return home();
-```
-
-![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/error.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/error.png)
-
-```php
-flash()->overlay('Notice', 'You are now a Laracasts member!');
-
-return home();
-```
-
-![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/overlay.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/overlay.png)
-
-> [Learn exactly how to build this very package on Laracasts!](https://laracasts.com/lessons/flexible-flash-messages)
 
 ## Hiding Flash Messages
 
 A common desire is to display a flash message for a few seconds, and then hide it. To handle this, write a simple bit of JavaScript. For example, using jQuery, you might add the following snippet just before the closing `</body>` tag.
+Because you can attach id property to tag, you can refer to `id` property directly. 
 
 ```
+flash('Message',['id'=>'toHide']);
+
 <script>
-$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+$('#toHide').delay(3000).fadeOut(350);
 </script>
 ```
 
-This will find any alerts - excluding the important ones, which should remain until manually closed by the user - wait three seconds, and then fade them out.
+## Custom views
+
+This package in current version don't provide views, to show flash messages.
