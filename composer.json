@@ -3,7 +3,7 @@
   "description": "Flash messages for Laravel",
   "type": "library",
   "license": "MIT",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "require": {
     "illuminate/session": "^5.4",
     "illuminate/support": "^5.4"
