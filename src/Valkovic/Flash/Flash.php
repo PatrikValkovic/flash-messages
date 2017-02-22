@@ -27,7 +27,7 @@ class Flash
     public function message($text, $type = null, $properties = [])
     {
         $message = new FlashMessage();
-        $message->text = $text;
+        $message->message = $text;
 
         if (!is_null($type)) {
             $properties['class'] = array_key_exists('class', $properties) ? $properties['class'] : '';
