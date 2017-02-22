@@ -22,7 +22,7 @@ class FlashMessage
     {
         $text = "";
         foreach ($this->properties as $property=>$val)
-            $text = $text . "$property=\"$val\" ";
+            $text = $text . "$property=$val ";
         return trim($text);
     }
 }
