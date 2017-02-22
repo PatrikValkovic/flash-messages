@@ -20,16 +20,19 @@ class Flash
 
     /**
      * @param string $text Text of message
-     * @param string('none'|'primary'|'info'|'success'|'warning'|'error') $type
+     * @param array|string('none'|'primary'|'info'|'success'|'warning'|'error') $type
      * @param array $properties Additional properties of message (id, class, etc.)
      * @return $this
      */
-    public function message($text, $type = null, $properties = [])
+    public function message($text, $type = [], $properties = [])
     {
         $message = new FlashMessage();
         $message->message = $text;
 
-        if (!is_null($type)) {
+        if(is_array($type))
+            $properties = $type;
+
+        if (is_string($type)) {
             $properties['class'] = array_key_exists('class', $properties) ? $properties['class'] : '';
             $properties['class'] = trim($properties['class'] . " $type");
         }
