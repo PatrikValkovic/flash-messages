@@ -12,17 +12,19 @@ Run `composer require valkovic/flash`
 And then, if using Laravel 5, include the service provider within `config/app.php`.
 
 ```php
-'web' => [
-    \Valkovic\Flash\FlashMiddleware::class,
+'providers' => [
+    \Valkovic\Flash\FlashServiceProvider::class,
 ],
 ```
 
 For correct use, you must also register middleware, that cares about loading and saving flash messages during requests.
 Attach middleware to any group you want, for example I will attach it to `web` group. Settings are at file `app/Http/Kernel.php`.
 
-
-
-
+```php
+'web' => [
+    \Valkovic\Flash\FlashMiddleware::class,
+],
+```
 
 You can also register Facade for Flash package. Just set alias in `config/app.php`
 
